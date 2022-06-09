@@ -15,7 +15,43 @@ function Routes () {
             <Stack.Screen 
             name='Home'
             component={Home}
+            options={{
+                headerShown: false
+            }}
             />
+        <Stack.Screen
+            name='Detail'
+            component={Detail}
+            options={{
+                title: 'Detalhes',
+                headerTintColor: '#FFF',
+                headerStyle:{
+                    backgroundColor: '#0E1630'
+                }
+            }}
+        />
+        <Stack.Screen
+            name='CategoryCoin'
+            component={CategoryCoin}
+            options={{
+                title: 'Cotação',
+                headerTintColor: '#FFF',
+                headerStyle:{
+                    backgroundColor: '#0E1630'
+                }
+            }}
+        />
+        <Stack.Screen
+            name='Search'
+            component={Search}
+            options={{
+                title: 'Pesquisar Gastos',
+                headerTintColor: '#FFF',
+                headerStyle:{
+                    backgroundColor: '#0E1630'
+                }
+            }}
+        />
         </Stack.Navigator>
     )
 }
