@@ -23,15 +23,17 @@ export default function CategoryItem({data, favorite}) {
 
 const style = StyleSheet.create({
     container: {
-        backgroundColor: '#FFF',
+        backgroundColor: '#F3C530',
         marginLeft: 8,
         marginVertical: 8,
-        borderRadius: 8,
+        borderRadius: 12,
         alignItems: 'center',
         justifyContent: 'center',
-        paddingHorizontal: 20
+        paddingHorizontal: 10,
+        width: 100
     },
     name:{
-
+        color: '#FFF',
+        fontSize: 16
     }
 })
