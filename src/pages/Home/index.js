@@ -15,14 +15,19 @@ import api from "../../services/api";
 import CategoryItem from "../../components/CategoryItem";
 import { getFavorite, setFavorite } from "../../services/favorite";
 import FavoriteExpense from "../../components/FavoriteExpense";
+import ExpenseItem from "../../components/ExpenseItem";
 
 export default function Home() {
   const navigation = useNavigation();
   const [categories, setCategories] = useState([]);
   const [favCategory, setFavCategory] = useState([]);
 
+  const [expenses, setExpenses] = useState([]);
+
   useEffect(() => {
     async function loadData() {
+      await getListExpenses();
+
       const category = await api.get("/api/categories");
       setCategories(category.data.data);
     }
@@ -39,6 +44,12 @@ export default function Home() {
 
     favorite();
   }, []);
+
+  // funcao para pegar as despesas, ordenando do mais atual para o menos recente
+  async function getListExpenses(){
+    const response = await api.get("/api/expenses?populate=category&sort_by=desc(date)") // http://localhost:8082/api/expenses?populate=category&sort=date:desc
+    setExpenses(response.data.data)
+  }
 
   // favoritando uma moeda em questão
   async function handleFavorite(id) {
@@ -85,8 +96,16 @@ export default function Home() {
           />
         )}
 
-        <Text style={[styles.title, 
+        <Text style={[styles.titleExpense, 
         {marginTop: favCategory.length > 0 ? -20 : 46}]}>Ultimos gastos</Text>
+
+        <FlatList 
+        style={{flex: 1, paddingHorizontal: 18}}
+        showsVerticalScrollIndicator={false}
+        data={expenses}
+        keyExtractor={ (item) => String(item.id)}
+        renderItem={({item}) => <ExpenseItem data={item}/>}
+        />
       </View>
     </SafeAreaView>
   );
@@ -122,11 +141,11 @@ const styles = StyleSheet.create({
       flex: 1,
       marginTop: -30,
   },
-  title: {
+  titleExpense: {
     fontSize: 21,
     paddingHorizontal: 18,
     marginBottom: 14,
     fontWeight: 'bold',
-    color: '#162133'
+    color: '#FFF'
   }
 });
