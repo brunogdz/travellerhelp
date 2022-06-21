@@ -1,9 +1,13 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import ValorEmReal from "../../util";
 import { compareAsc, format } from "date-fns";
 
+import { useNavigation } from "@react-navigation/native";
+
+
 export default function ExpenseItem({ data }) {
+  const navigation = useNavigation();
+
   const valorReal =
     Number(data?.attributes?.category?.data?.attributes?.value) *
     Number(data?.attributes?.description);
@@ -12,8 +16,14 @@ export default function ExpenseItem({ data }) {
   // const year = dateFormat.getFullYear()
   // const month = dateFormat.getMonth()
   // const day = dateFormat.getDate();
+
+  function handleDetails () {
+    navigation.navigate("Detail", {id: data?.id})
+  }
   return (
-    <TouchableOpacity style={styles.container}>
+    <TouchableOpacity style={styles.container}
+    onPress={handleDetails}
+    >
       <Text style={styles.title}>{data?.attributes?.title}</Text>
       <View style={styles.content}>
         <View>
