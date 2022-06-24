@@ -13,7 +13,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Feather } from "@expo/vector-icons";
 import api from "../../services/api";
 import CategoryItem from "../../components/CategoryItem";
-import { getFavorite, setFavorite } from "../../services/favorite";
+import { getCotacao, getFavorite, setFavorite } from "../../services/favorite";
 import FavoriteExpense from "../../components/FavoriteExpense";
 import ExpenseItem from "../../components/ExpenseItem";
 
@@ -21,6 +21,7 @@ export default function Home() {
   const navigation = useNavigation();
   const [categories, setCategories] = useState([]);
   const [favCategory, setFavCategory] = useState([]);
+  const [cotacao, setCotacao] = useState([]);
 
   const [expenses, setExpenses] = useState([]);
 
@@ -39,10 +40,19 @@ export default function Home() {
   useEffect(() => {
     async function favorite() {
       const response = await getFavorite();
+      console.log("favorite", response)
       setFavCategory(response);
     }
 
+    async function cotacao(){
+      const test = await getCotacao();
+      console.log("test", test)
+      // alert(test.length)
+      setCotacao([test]);
+    }
+
     favorite();
+    cotacao();
   }, []);
 
   // funcao para pegar as despesas, ordenando do mais atual para o menos recente
@@ -60,6 +70,10 @@ export default function Home() {
       "Moeda Favoritada, agora pode ver os gastos referentes a uma moeda em questão."
     );
   }
+
+  // async function handleCotacao(id){
+  //   const response = 
+  // }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -79,7 +93,7 @@ export default function Home() {
         data={categories}
         keyExtractor={(item) => String(item.id)}
         renderItem={({ item }) => (
-          <CategoryItem data={item} favorite={() => handleFavorite(item.id)} />
+          <CategoryItem data={item} favorite={() => handleFavorite(item.id)} cotacoes={cotacao} />
         )}
       />
 

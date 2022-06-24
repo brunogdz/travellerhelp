@@ -1,3 +1,3 @@
-export default async function ValorEmReal({valor, cotacao}){
-    return parseFloat(valor * cotacao)
+export default function getTheValue(value){
+    return value[0].value_formated
 }
