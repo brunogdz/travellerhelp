@@ -112,21 +112,21 @@ export async function getCotacao() {
       currency: "BRL",
     });
   };
-  console.log("Entrando no data");
-  console.log(data);
+  // console.log("Entrando no data");
+  // console.log(data);
   // if (data == null) {
   const formatCoins = coins.map((c) => c.coin).join(",");
 
   const response = await axios.get(
     `http://economia.awesomeapi.com.br/json/last/${formatCoins}`
   );
-  console.log("response");
-  console.log(response);
+  // console.log("response");
+  // console.log(response);
   const formatResponse = Object.keys(response.data).map(function (key) {
     return response.data[key];
   });
-  console.log("formatResponse");
-  console.log(formatResponse);
+  // console.log("formatResponse");
+  // console.log(formatResponse);
 
   for (let cc of formatResponse) {
     let formatValue = parseFloat(cc.ask).toFixed(2);
@@ -143,11 +143,11 @@ export async function getCotacao() {
     ];
   }
   
-  console.log("coin 1", coins);
+  // console.log("coin 1", coins);
   coins = coins.filter((c) => c.value > 0);
   // coins = coins.map((c) => c)
-  console.log("coins");
-  console.log(coins);
+  // console.log("coins");
+  // console.log(coins);
   // alert(coins.length())
   return coins;
   // } else {

@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import Detail from './pages/Detail';
 import CategoryCoin from './pages/CategoryCoin';
 import Search from './pages/Search';
+import Register from './pages/Register';
 
 const Stack = createNativeStackNavigator();
 
@@ -46,6 +47,17 @@ function Routes () {
             component={Search}
             options={{
                 title: 'Pesquisar Gastos',
+                headerTintColor: '#FFF',
+                headerStyle:{
+                    backgroundColor: '#0E1630'
+                }
+            }}
+        />
+        <Stack.Screen
+            name='Register'
+            component={Register}
+            options={{
+                title: 'Criar despesa',
                 headerTintColor: '#FFF',
                 headerStyle:{
                     backgroundColor: '#0E1630'

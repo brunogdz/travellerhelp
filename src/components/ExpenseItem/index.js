@@ -5,11 +5,23 @@ import { compareAsc, format } from "date-fns";
 import { useNavigation } from "@react-navigation/native";
 
 
-export default function ExpenseItem({ data }) {
+export default function ExpenseItem({ data, cotacoes }) {
   const navigation = useNavigation();
 
+  function getTheCurrentCotation(name) {
+    let a = cotacoes.map((e) => e.find((tes) => tes.code === name));
+    if (a) {
+      let value = a[0]?.value_formated;
+      return value;
+    } else {
+      return 0.0;
+    }
+  }
+    // console.log()
+   let cotacaoAtual = getTheCurrentCotation(data?.attributes?.category?.data?.attributes?.name)
+  //  console.log("value of the current value ", value)
   const valorReal =
-    Number(data?.attributes?.category?.data?.attributes?.value) *
+    Number(data?.attributes?.cotation) * 
     Number(data?.attributes?.description);
 
   const dateFormat = format(new Date(data?.attributes?.date), "dd/MM/yyyy");
@@ -34,7 +46,7 @@ export default function ExpenseItem({ data }) {
             Moeda: {data?.attributes?.category?.data?.attributes?.name}
           </Text>
           <Text style={styles.cotacao}>
-            Cotação: R$ {data?.attributes?.category?.data?.attributes?.value}
+            Cotação: R$ {data?.attributes?.cotation}
           </Text>
         </View>
         <View>

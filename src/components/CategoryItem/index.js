@@ -9,6 +9,7 @@ export default function CategoryItem({ data, favorite, cotacoes }) {
   // console.log("data no category",data)
 
   function handleNavigate() {
+    // console.log("handle Navigate", data.id, "name", data?.attributes?.name,)
     navigation.navigate("CategoryCoin", {
       id: data.id,
       title: data?.attributes?.name,

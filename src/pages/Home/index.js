@@ -16,6 +16,7 @@ import CategoryItem from "../../components/CategoryItem";
 import { getCotacao, getFavorite, setFavorite } from "../../services/favorite";
 import FavoriteExpense from "../../components/FavoriteExpense";
 import ExpenseItem from "../../components/ExpenseItem";
+import Footer from "../../components/Footer";
 
 export default function Home() {
   const navigation = useNavigation();
@@ -40,13 +41,13 @@ export default function Home() {
   useEffect(() => {
     async function favorite() {
       const response = await getFavorite();
-      console.log("favorite", response)
+      // console.log("favorite", response)
       setFavCategory(response);
     }
 
     async function cotacao(){
       const test = await getCotacao();
-      console.log("test", test)
+      // console.log("test", test)
       // alert(test.length)
       setCotacao([test]);
     }
@@ -57,7 +58,7 @@ export default function Home() {
 
   // funcao para pegar as despesas, ordenando do mais atual para o menos recente
   async function getListExpenses(){
-    const response = await api.get("/api/expenses?populate=category&sort_by=desc(date)") // http://localhost:8082/api/expenses?populate=category&sort=date:desc
+    const response = await api.get("/api/expenses?populate=category&sort=date:desc") // http://localhost:8082/api/expenses?populate=category&sort=date:desc or /api/expenses?populate=category&sort_by=desc(date)
     setExpenses(response.data.data)
   }
 
@@ -65,7 +66,7 @@ export default function Home() {
   async function handleFavorite(id) {
     const response = await setFavorite(id);
     setFavCategory(response);
-    console.log(response);
+    // console.log(response);
     alert(
       "Moeda Favoritada, agora pode ver os gastos referentes a uma moeda em questão."
     );
@@ -118,9 +119,10 @@ export default function Home() {
         showsVerticalScrollIndicator={false}
         data={expenses}
         keyExtractor={ (item) => String(item.id)}
-        renderItem={({item}) => <ExpenseItem data={item}/>}
+        renderItem={({item}) => <ExpenseItem data={item} cotacoes={cotacao} />}
         />
       </View>
+      <Footer />
     </SafeAreaView>
   );
 }
