@@ -23,6 +23,7 @@ export default function Home() {
   const [categories, setCategories] = useState([]);
   const [favCategory, setFavCategory] = useState([]);
   const [cotacao, setCotacao] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const [expenses, setExpenses] = useState([]);
 
@@ -45,7 +46,7 @@ export default function Home() {
       setFavCategory(response);
     }
 
-    async function cotacao(){
+    async function cotacao() {
       const test = await getCotacao();
       // console.log("test", test)
       // alert(test.length)
@@ -57,9 +58,13 @@ export default function Home() {
   }, []);
 
   // funcao para pegar as despesas, ordenando do mais atual para o menos recente
-  async function getListExpenses(){
-    const response = await api.get("/api/expenses?populate=category&sort=date:desc") // http://localhost:8082/api/expenses?populate=category&sort=date:desc or /api/expenses?populate=category&sort_by=desc(date)
-    setExpenses(response.data.data)
+  async function getListExpenses() {
+    setLoading(true);
+    const response = await api.get(
+      "/api/expenses?populate=category&sort=date:desc"
+    ); // http://localhost:8082/api/expenses?populate=category&sort=date:desc or /api/expenses?populate=category&sort_by=desc(date)
+    setExpenses(response.data.data);
+    setLoading(false);
   }
 
   // favoritando uma moeda em questão
@@ -73,7 +78,7 @@ export default function Home() {
   }
 
   // async function handleCotacao(id){
-  //   const response = 
+  //   const response =
   // }
 
   return (
@@ -94,7 +99,11 @@ export default function Home() {
         data={categories}
         keyExtractor={(item) => String(item.id)}
         renderItem={({ item }) => (
-          <CategoryItem data={item} favorite={() => handleFavorite(item.id)} cotacoes={cotacao} />
+          <CategoryItem
+            data={item}
+            favorite={() => handleFavorite(item.id)}
+            cotacoes={cotacao}
+          />
         )}
       />
 
@@ -102,7 +111,7 @@ export default function Home() {
         {favCategory.length !== 0 && (
           <FlatList
             style={{ marginTop: 50, maxHeight: 100, paddingStart: 18 }}
-            contentContainerStyle={{paddingEnd: 25}}
+            contentContainerStyle={{ paddingEnd: 25 }}
             data={favCategory}
             horizontal={true}
             showsHorizontalScrollIndicator={false}
@@ -110,16 +119,27 @@ export default function Home() {
             renderItem={({ item }) => <FavoriteExpense data={item} />}
           />
         )}
+        <View>
+          <Text
+            style={[
+              styles.titleExpense,
+              { marginTop: favCategory.length > 0 ? -20 : 46 },
+            ]}
+          >
+            Ultimos gastos
+          </Text>
+        </View>
 
-        <Text style={[styles.titleExpense, 
-        {marginTop: favCategory.length > 0 ? -20 : 46}]}>Ultimos gastos</Text>
-
-        <FlatList 
-        style={{flex: 1, paddingHorizontal: 18}}
-        showsVerticalScrollIndicator={false}
-        data={expenses}
-        keyExtractor={ (item) => String(item.id)}
-        renderItem={({item}) => <ExpenseItem data={item} cotacoes={cotacao} />}
+        <FlatList
+          style={{ flex: 1, paddingHorizontal: 18 }}
+          showsVerticalScrollIndicator={false}
+          data={expenses}
+          keyExtractor={(item) => String(item.id)}
+          renderItem={({ item }) => (
+            <ExpenseItem data={item} cotacoes={cotacao} />
+          )}
+          refreshing={loading}
+          onRefresh={() => getListExpenses()}
         />
       </View>
       <Footer />
@@ -153,15 +173,15 @@ const styles = StyleSheet.create({
     zIndex: 9,
   },
   main: {
-      backgroundColor: '#4A567D',
-      flex: 1,
-      marginTop: -30,
+    backgroundColor: "#4A567D",
+    flex: 1,
+    marginTop: -30,
   },
   titleExpense: {
     fontSize: 21,
     paddingHorizontal: 18,
     marginBottom: 14,
-    fontWeight: 'bold',
-    color: '#FFF'
-  }
+    fontWeight: "bold",
+    color: "#FFF",
+  },
 });

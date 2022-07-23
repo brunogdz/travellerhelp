@@ -6,6 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 
 
 export default function ExpenseItem({ data, cotacoes }) {
+  // console.log("cotacoes vieram", data?.attributes?.category?.data?.attributes?.name)
   const navigation = useNavigation();
 
   function getTheCurrentCotation(name) {
@@ -20,14 +21,18 @@ export default function ExpenseItem({ data, cotacoes }) {
     // console.log()
    let cotacaoAtual = getTheCurrentCotation(data?.attributes?.category?.data?.attributes?.name)
   //  console.log("value of the current value ", value)
-  const valorReal =
+  const valorReal =  parseFloat(
     Number(data?.attributes?.cotation) * 
-    Number(data?.attributes?.description);
+    Number(data?.attributes?.description)).toFixed(2);
 
   const dateFormat = format(new Date(data?.attributes?.date), "dd/MM/yyyy");
   // const year = dateFormat.getFullYear()
   // const month = dateFormat.getMonth()
   // const day = dateFormat.getDate();
+  const descriptionFormated = parseFloat(
+    Number(data?.attributes?.description)).toFixed(2);
+  const cotacaoFormated = parseFloat(
+    Number(data?.attributes?.cotation)).toFixed(2); 
 
   function handleDetails () {
     navigation.navigate("Detail", {id: data?.id})
@@ -40,13 +45,13 @@ export default function ExpenseItem({ data, cotacoes }) {
       <View style={styles.content}>
         <View>
           <Text style={styles.spent}>
-            Valor: $ {data?.attributes?.description}
+            Valor: $ {descriptionFormated}
           </Text>
           <Text style={styles.coin}>
             Moeda: {data?.attributes?.category?.data?.attributes?.name}
           </Text>
           <Text style={styles.cotacao}>
-            Cotação: R$ {data?.attributes?.cotation}
+            Cotação na compra: R$ {cotacaoFormated}
           </Text>
         </View>
         <View>

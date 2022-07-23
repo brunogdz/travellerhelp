@@ -10,77 +10,70 @@ import {
   TextInput,
   ImageBackground,
 } from "react-native";
-import { Picker } from "@react-native-picker/picker";
-import { compareAsc, format } from "date-fns";
 import axios from "axios";
-
-import api from "../../services/api";
-
 import FundoRegister from "../../../assets/register.jpg";
-import { render } from "react-dom";
+import { Picker } from "@react-native-picker/picker";
 
-export default function Register() {
+export default function EditExpense({ route, navigation }) {
+  const { idEdit, titleEdit, descriptionEdit, dateEdit, categoryEdit } =
+    route.params;
   const [modifiedData, setModifiedData] = useState({
     data: {
       title: "",
-      description: 200,
-      date: new Date(),
+      description: descriptionEdit,
+      date: dateEdit,
       cotation: 6.23,
-      category: [1],
+      category: [categoryEdit],
     },
   });
-
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState(0);
-  const [selectedValue, setSelectedValue] = useState(0);
-  // const [cota]
-
-  // function chengeTitle(){
-
-  // }
+  const [title, setTitle] = useState(titleEdit);
+  const [description, setDescription] = useState(JSON.stringify(descriptionEdit));
+  const [selectedValue, setSelectedValue] = useState(categoryEdit);
 
   async function test() {
     modifiedData.data.category = [selectedValue];
     modifiedData.data.title = title;
-    if(selectedValue == 1){
+    if (selectedValue == 1) {
       const response = await axios.get(
         `http://economia.awesomeapi.com.br/json/last/USD`
       );
-      modifiedData.data.cotation = (response.data["USDBRL"].ask)
+      modifiedData.data.cotation = response.data["USDBRL"].ask;
     }
-    if(selectedValue == 2){
+    if (selectedValue == 2) {
       const response = await axios.get(
         `http://economia.awesomeapi.com.br/json/last/EUR`
       );
-      modifiedData.data.cotation = (response.data["EURBRL"].ask)
+      modifiedData.data.cotation = response.data["EURBRL"].ask;
     }
-    if(selectedValue == 3){
+    if (selectedValue == 3) {
       const response = await axios.get(
         `http://economia.awesomeapi.com.br/json/last/CAD`
       );
-      modifiedData.data.cotation = (response.data["CADBRL"].ask)
+      modifiedData.data.cotation = response.data["CADBRL"].ask;
     }
-    if(selectedValue == 4){
+    if (selectedValue == 4) {
       const response = await axios.get(
         `http://economia.awesomeapi.com.br/json/last/MXN`
       );
-      modifiedData.data.cotation = (response.data["MXNBRL"].ask)
+      modifiedData.data.cotation = response.data["MXNBRL"].ask;
     }
-    if(selectedValue == 5){
+    if (selectedValue == 5) {
       const response = await axios.get(
         `http://economia.awesomeapi.com.br/json/last/GBP`
       );
-      modifiedData.data.cotation = parseFloat((response.data["GBPBRL"].ask)).toFixed(2)
+      modifiedData.data.cotation = parseFloat(
+        response.data["GBPBRL"].ask
+      ).toFixed(2);
     }
-    modifiedData.data.description = parseFloat(description).toFixed(2)
+    modifiedData.data.description = parseFloat(description).toFixed(2);
 
-    await registerExpense()
+    await registerExpense();
   }
 
   async function registerExpense() {
     try {
-      const response = await axios.post(
-        "http://192.168.56.1:8082/api/expenses",
+      const response = await axios.put(
+        `http://192.168.56.1:8082/api/expenses/${idEdit}`,
         modifiedData
       );
       // const response = await axios({method: 'post', url: 'http://192.168.56.1:8082/api/expenses', modifiedData);
@@ -89,17 +82,7 @@ export default function Register() {
       alert(error);
     }
   }
-
-  // const pickerRef = useRef();
-
-  // function open() {
-  //   pickerRef.current.focus();
-  // }
-
-  // function close() {
-  //   pickerRef.current.blur();
-  // }
-
+  
   return (
     <SafeAreaView>
       <ImageBackground
@@ -152,7 +135,7 @@ export default function Register() {
             <Text>{selectedValue}</Text>
           </View> */}
           <TouchableOpacity style={styles.buttonRegister} onPress={test}>
-            <Text style={styles.buttonText}>Registrar</Text>
+            <Text style={styles.buttonText}>Atualizar</Text>
           </TouchableOpacity>
         </View>
         {/* <Button title="Cadastrar" onPress={registerExpense}/> */}
@@ -179,14 +162,14 @@ const styles = StyleSheet.create({
   buttonRegister: {
     width: 364,
     borderRadius: 6,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
     height: 56,
     backgroundColor: "#00875F",
   },
   buttonText: {
-    color: '#e1ede6'
+    color: "#e1ede6",
   },
   titleInput: {
     width: 364,
@@ -195,15 +178,15 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     marginTop: 20,
     marginBottom: 40,
-    backgroundColor: '#FFF'
+    backgroundColor: "#FFF",
   },
   valueInput: {
     width: 364,
     height: 56,
-    backgroundColor: '#FFF',
+    backgroundColor: "#FFF",
     borderRadius: 6,
     borderWidth: 2,
     marginTop: 20,
     marginBottom: 40,
-  }
+  },
 });

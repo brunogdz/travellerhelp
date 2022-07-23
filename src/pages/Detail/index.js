@@ -7,6 +7,7 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
+import axios from "axios";
 import api from "../../services/api";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { compareAsc, format } from "date-fns";
@@ -29,7 +30,6 @@ export default function Detail({ id, title }) {
       const response = await api.get(
         `api/expenses/${route.params?.id}?populate=category`
       );
-      console.log(response.data?.data?.attributes?.cotation);
       setPost(response.data.data);
       let cotacao = parseFloat(
         response.data?.data?.attributes?.cotation
@@ -47,28 +47,32 @@ export default function Detail({ id, title }) {
       setCotacaoData(dateFormat);
       let total = parseFloat(cotacao * gasto).toFixed(2);
       setValorTotal(total);
-      // setMoeda(
-      //   response.data?.data?.attributes?.category?.data?.attributes?.name
-      // );
-      // let moedaAtual = await cotacaoCoin(
-      //   response.data?.data?.attributes?.category?.data?.attributes?.name
-      // );
-      // let dataAtualizacao = await cotacaoCoinData(
-      //   response.data?.data?.attributes?.category?.data?.attributes?.name
-      // );
-      // let dataAtualizacaoFormatado = format(new Date(dataAtualizacao), "dd/MM/yyyy");
-      // setCotacaoAtual(moedaAtual);
-      // setCotacaoData(dataAtualizacaoFormatado);
-      // let cotacao = parseFloat(
-      //   response.data?.data?.attributes?.cotation
-      // ).toFixed(2);
-      // setMoeda(cotacao);
     }
 
     getPost();
   }, []);
+  async function deleteGasto() {
+    try {
+      const result = await axios.delete(
+        `http://192.168.56.1:8082/api/expenses/${post?.id}`
+      );
+      // const response = await axios({method: 'post', url: 'http://192.168.56.1:8082/api/expenses', modifiedData);
+      console.log("Response of register: ", result);
+      navigation.navigate("Home");
+    } catch (error) {
+      alert(error);
+    }
+  }
 
-  // const dateFormat = format(new Date(post?.attributes?.date), "dd/MM/yyyy");
+  function handleNavigateEdit() {
+    navigation.navigate("EditExpense", {
+      idEdit: post?.id,
+      titleEdit: post?.attributes?.title,
+      descriptionEdit: post?.attributes?.description,
+      dateEdit: post?.attributes?.date,
+      categoryEdit: post?.attributes?.category?.data?.id,
+    });
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -86,7 +90,7 @@ export default function Detail({ id, title }) {
           </Text>
           <Text style={styles.textContent}>Total Gasto: R${valorTotal}</Text>
           <View style={styles.buttons}>
-            <TouchableOpacity style={styles.buttonEdit}>
+            <TouchableOpacity style={styles.buttonEdit} onPress={handleNavigateEdit}>
               <Text style={{ color: "#fff" }}>Editar</Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -99,17 +103,25 @@ export default function Detail({ id, title }) {
           {showConfirmation && (
             <View>
               <Text
-                style={{ textAlign: "center", fontSize: 20, marginTop: 10, color: "#FBA94C" }}
+                style={{
+                  textAlign: "center",
+                  fontSize: 20,
+                  marginTop: 10,
+                  color: "#FBA94C",
+                }}
               >
-                Certeza que deseja confirmar?
+                Certeza que deseja excluir?
               </Text>
               <View style={styles.buttonsConfirm}>
-                <TouchableOpacity style={styles.buttonCancel} onPress={() => setShowConfirmation(false)}>
+                <TouchableOpacity
+                  style={styles.buttonCancel}
+                  onPress={() => setShowConfirmation(false)}
+                >
                   <Text style={{ color: "#fff" }}>Cancelar</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={styles.buttonConfirm}
-                  onPress={() => setShowConfirmation(true)}
+                  onPress={deleteGasto}
                 >
                   <Text style={{ color: "#fff" }}>Excluir</Text>
                 </TouchableOpacity>
@@ -152,7 +164,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#131d3f",
     height: "100%",
     padding: 20,
-  },buttonsConfirm: {
+  },
+  buttonsConfirm: {
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
@@ -189,7 +202,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderRadius: 4,
     borderWidth: 1,
-    backgroundColor: 'red',
+    backgroundColor: "red",
     borderColor: "red",
   },
   buttonConfirm: {
@@ -200,6 +213,6 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     borderWidth: 1,
     borderColor: "green",
-    backgroundColor: 'green'
-  }
+    backgroundColor: "green",
+  },
 });
