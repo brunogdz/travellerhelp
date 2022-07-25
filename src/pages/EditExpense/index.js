@@ -13,8 +13,11 @@ import {
 import axios from "axios";
 import FundoRegister from "../../../assets/register.jpg";
 import { Picker } from "@react-native-picker/picker";
+import { useNavigation } from "@react-navigation/native";
 
-export default function EditExpense({ route, navigation }) {
+
+export default function EditExpense({ route}) {
+  const navigation = useNavigation();
   const { idEdit, titleEdit, descriptionEdit, dateEdit, categoryEdit } =
     route.params;
   const [modifiedData, setModifiedData] = useState({
@@ -68,6 +71,8 @@ export default function EditExpense({ route, navigation }) {
     modifiedData.data.description = parseFloat(description).toFixed(2);
 
     await registerExpense();
+    navigation.navigate("Home")
+    
   }
 
   async function registerExpense() {

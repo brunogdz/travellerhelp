@@ -13,13 +13,15 @@ import {
 import { Picker } from "@react-native-picker/picker";
 import { compareAsc, format } from "date-fns";
 import axios from "axios";
-
+import { useNavigation } from "@react-navigation/native";
 import api from "../../services/api";
 
 import FundoRegister from "../../../assets/register.jpg";
 import { render } from "react-dom";
 
 export default function Register() {
+  const navigation = useNavigation();
+
   const [modifiedData, setModifiedData] = useState({
     data: {
       title: "",
@@ -75,6 +77,7 @@ export default function Register() {
     modifiedData.data.description = parseFloat(description).toFixed(2)
 
     await registerExpense()
+    navigation.navigate("Home")
   }
 
   async function registerExpense() {

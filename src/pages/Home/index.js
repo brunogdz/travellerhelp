@@ -128,6 +128,7 @@ export default function Home() {
           >
             Ultimos gastos
           </Text>
+          
         </View>
 
         <FlatList
