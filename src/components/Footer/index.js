@@ -7,13 +7,13 @@ export default function Footer(){
     const navigation = useNavigation();
     return(
         <View style={styles.container}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate("Home")}>
                 <Text style={styles.title}>Listagem</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => navigation.navigate("Register")}>
                 <Text style={styles.title}>Cadastrar</Text>
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate("Cotation")}>
                 <Text style={styles.title}>Cotações</Text>
             </TouchableOpacity>
         </View>
