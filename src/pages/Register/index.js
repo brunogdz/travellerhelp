@@ -15,6 +15,7 @@ import { compareAsc, format } from "date-fns";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 import api from "../../services/api";
+import Footer from "../../components/Footer";
 
 import FundoRegister from "../../../assets/register.jpg";
 import { render } from "react-dom";
@@ -115,7 +116,7 @@ export default function Register() {
             Registre o seu gasto{"\n"} e selecione a moeda.
           </Text>
         </View>
-        <View style={{ alignItems: "center" }}>
+        <View style={{ alignItems: "center", flex: 1 }}>
           <TextInput
             placeholder="Titulo do gasto"
             onChangeText={setTitle}
@@ -159,6 +160,7 @@ export default function Register() {
           </TouchableOpacity>
         </View>
         {/* <Button title="Cadastrar" onPress={registerExpense}/> */}
+      <Footer />
       </ImageBackground>
     </SafeAreaView>
   );

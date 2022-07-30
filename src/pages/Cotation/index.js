@@ -26,8 +26,8 @@ export default function Cotation() {
   async function loadValue() {
     setLoading(true);
     const response = await cotacaoCoin(selectedValue);
-    console.log(response);
-    setTimeout(() => setLoading(false), 500);
+    // console.log(response);
+    setTimeout(() => setLoading(false), 2000);
     // setLoading(false);
     
     setValorFinal(parseFloat(value * response).toFixed(2))
