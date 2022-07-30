@@ -8,5 +8,5 @@ Traveller Help is to help users to organize their expenses. You can add your exp
 
 
 <p align="center">
-    <img src="assets/uso.gif" height="700" alt="Gif showing how to use the app" />
+    <img src="assets/uso.gif" height="auto" alt="Gif showing how to use the app" />
 </p>
