@@ -48,7 +48,7 @@ git clone https://github.com/brunogdz/travellerhelp-api
 ```
 
 ```sh
-cd financeTrip-api
+cd travellerhelp-api
 yarn
 
 cd travellerhelp 
