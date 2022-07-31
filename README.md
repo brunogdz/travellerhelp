@@ -77,7 +77,7 @@ This runs in the android or ios emulator or in your cellphone.
 After install in your device it will open and you can use it.
 
 <p align="center">
-    <img src="assets/image2_home.png" height="auto" alt="Home" />
+    <img src="assets/image2_home.png" height="10" alt="Home" />
 </p>
 
 <p align="center">
