@@ -88,7 +88,7 @@ After install in your device it will open and you can use it.
 
 Bruno Gomes - @brunogdev - contact@brunogdev.com
 
-[https://github.com/brunogdz](github.com/brunogdz)
+[https://github.com/brunogdz](https://github.com/brunogdz)
 
 ## Contributing
 
