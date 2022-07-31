@@ -6,10 +6,10 @@ Developed by Bruno Gomes
 
 Traveller Help is to help users to organize their expenses. You can add your expenses in other coins and see how much you spent in reais. The frontend and backed are implemented seperately. If you want to know more about the backend you can access here: <a href="https://github.com/brunogdz/travellerhelp-api">API</a>
 
-
 <p align="center">
-    <img src="assets/uso.gif" height="auto" alt="Gif showing how to use the app" />
+    <img src="assets/image1_telaInicial.png" height="auto" alt="Initial Screen" />
 </p>
+
 
 ## Features
 
@@ -76,6 +76,24 @@ This runs in the android or ios emulator or in your cellphone.
 
 After install in your device it will open and you can use it.
 
+<p align="center">
+    <img src="assets/image2_home.png" height="auto" alt="Home" />
+</p>
 
+<p align="center">
+    <img src="assets/uso.gif" height="auto" alt="Gif showing how to use the app" />
+</p>
 
-### Meta 
+### Meta
+
+Bruno Gomes - @brunogdev - contact@brunogdev.com
+
+[https://github.com/brunogdz](github.com/brunogdz)
+
+## Contributing
+
+1. Fork it (<https://github.com/brunogdz/travellerhelp>)
+2. Create your feature branch (`git checkout -b feature/fooBar`)
+3. Commit your changes (`git commit -am 'Add some fooBar'`)
+4. Push to the branch (`git push origin feature/fooBar`)
+5. Create a new Pull Request
